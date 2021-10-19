@@ -1,2 +1,2 @@
-# Plant_Biosynthetic_gene_cluster
+# Biosynthetic_gene_clusters of Plant microbiome
 Code for Manuscript
