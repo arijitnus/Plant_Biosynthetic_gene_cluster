@@ -1,3 +1,3 @@
-# Biosynthetic_gene_clusters of Plant microbiome
-#Code for Manuscript
-#Please email us at arijitmukherjee@u.nus.edu for any queries
+# Biosynthetic Gene Clusters of Plant microbiome
+#R code and datasets for the manuscript titled 'Terpenes and aryl polyenes are strobgly conserved among phytobiomes'
+#R code, .rds file and input data files are shared under the header of individual figures' folder. For any queries feel free to contact me- arijitmukherjee0012@gmail.com
