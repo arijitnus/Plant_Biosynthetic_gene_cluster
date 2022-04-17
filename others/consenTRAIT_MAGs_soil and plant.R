@@ -5,11 +5,6 @@ library(dplyr)
 library(caper)
 library(castor)
 
-plant_mags<-read_excel("/Users/arijitmukherjee/Documents/Phytobiome/BGC_isolates/New_final_data/MAGs/Earth_MAGs/latest_ANI_analysis/new_report_consentrait.xlsx",col_names = T,skip = 0,sheet = "Plant_MAGs_curated")
-head(plant_mags)
-
-plant_mags_98<-plant_mags%>%filter(ANI_98=="Y")
-dim(plant_mags_98)#573
 
 plant_tree_98<-read.tree("gtdbtk_rooted_98_plantmags.tre")
 
