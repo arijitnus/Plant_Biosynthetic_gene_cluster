@@ -73,34 +73,31 @@ dev.off()
 
 
 #World map isolates
-library(readxl)
-library(readr)
-plant_isolates<-read_excel("/Users/arijitmukherjee/Documents/Phytobiome/BGC_isolates/New_final_data/MAGs/Earth_MAGs/Fig.1/new_report (2).xlsx",
-                           sheet="PA_isolates",col_names = T,skip = 0)
-head(plant_isolates)
-library(dplyr)
-library(ggplot2)
-plant_isolates_wm_df<-plant_isolates%>%group_by(Latitude,Longitude)%>%summarise(count=n())%>%arrange(-count)
-write.table(plant_isolates_wm_df,"plant_isolates_wm_df2.tsv",sep = "\t")
 
-#Readin the formatted data
+#Reading the formatted data
 isolates_df<-read_excel("/Users/arijitmukherjee/Documents/Phytobiome/BGC_isolates/New_final_data/MAGs/Earth_MAGs/Fig.1/new_report (2).xlsx",
                         sheet = "isolates_location2",col_names = T,skip = 0)
 isolates_df$Number<-as.factor(isolates_df$Number)
+names(isolates_df)
 
-# Get the world polygon and extract UK
+library(tidyverse)
+library(ggplot2)
+library(readr)
 library(maps)
-wisolates<-ggplot() +
-  geom_polygon(data = world, aes(x=long, y = lat, group = group), fill="grey", alpha=0.8) +
-  geom_point( data=isolates_df, aes(x=longitude, y=latitude,size=Number),color="steelblue",alpha=0.6) +
+library(viridis)
+library(readxl)
+world_map<-map_data("world")
+wmaps<-ggplot() +
+  geom_polygon(data = world_map, aes(x=long, y = lat, group = group), fill="grey", alpha=0.8) +
+  geom_point( data=isolates_df, aes(x=longitude, y=latitude,size=Number,col=Datasets),alpha=0.6) +
   theme_void()+
   xlab("")+
   ylab("")+
-  theme(axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.title.y = element_blank())
-wisolates
-saveRDS(wisolates,file = "World_map_isolates.rds")
+  theme(axis.text.x = element_text(size = 12),
+      axis.text.y = element_text(size = 12),
+      axis.title.y = element_text(size = 12))
+wmaps
+saveRDS(wmags,"World_MAGs.rds")
 ggsave(
   "world_map_isolates.tiff",
   plot = last_plot(),
@@ -113,6 +110,7 @@ ggsave(
   dpi = 700,
 )
 dev.off()
+
 
 
 
