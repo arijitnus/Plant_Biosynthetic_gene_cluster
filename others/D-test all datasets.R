@@ -1,5 +1,5 @@
 #This is the script for calculating D-values 
-#### we shall calculate the D-values for all the isolates based on different ANI values
+
 
 library(readxl)
 library(dplyr)
