@@ -1,6 +1,6 @@
 #This is the script for calculating D-values 
 
-
+##########################################Plant isolates##############
 library(readxl)
 library(dplyr)
 library(caper)
@@ -65,7 +65,72 @@ dat_98_other<-phylo.d(dat_98_phy_signal,binvar = Others)
 dat_98_other#0.33
 
 
-#######===================Plant MAGs all three ANIs; Calculate D values=======
+#Soil isolates data; calculate D-stats for 98 ANI values
+library(readxl)
+library(dplyr)
+library(caper)
+soil_98<-read_excel("/Users/arijitmukherjee/Documents/soil_D_stat/soil_isolates.xlsx",
+                col_names = T,skip = 0,sheet = "table")
+
+dim(soil_98)#1395
+
+#Read trees
+tree_98<-read.tree("soil_98.tree")
+#subset the dataframes based on the MAGs and only the BGC columns
+head(soil_98)
+soil_98_sub<-soil_98[,-1]
+soil_98_binary<-soil_98_sub%>% mutate_if(is.numeric, ~1 * (. > 0))
+head(soil_98_binary)
+soil_98_binary$genomes<-soil_98$genomeID
+soil_98_binary<-as.data.frame(soil_98_binary)
+length(tree_98$tip.label)
+tree_98$node.label<-NULL
+soil_98_phy_signal<-comparative.data(tree_98,soil_98_binary,genomes)
+
+#calculate D-values for soil isolates
+soil_98_aryl<-phylo.d(soil_98_phy_signal,binvar = arylpolyene)
+soil_98_aryl#0.239
+
+soil_98_betalactone<-phylo.d(soil_98_phy_signal,binvar = betalactone)
+soil_98_betalactone#0.449 [Note, prob of brownian motion is 0.143, means they have brownian structure of inheritence]
+
+soil_98_hserlactone<-phylo.d(soil_98_phy_signal,binvar = hserlactone)
+soil_98_hserlactone#0.0.143
+
+soil_98_NRPS<-phylo.d(soil_98_phy_signal,binvar = NRPS)
+soil_98_NRPS#0.404
+
+
+soil_98_RiPPs<-phylo.d(soil_98_phy_signal,binvar = RiPPs)
+soil_98_RiPPs#0.505
+
+soil_98_siderophore<-phylo.d(soil_98_phy_signal,binvar = siderophore)
+soil_98_siderophore#0.247
+
+
+soil_98_terpene<-phylo.d(soil_98_phy_signal,binvar = Terpene)
+soil_98_terpene#0.175
+
+soil_98_PKS_NRP_hybrids<-phylo.d(soil_98_phy_signal,binvar = `PKS-NRP_Hybrids`)
+soil_98_PKS_NRP_hybrids#0.408
+
+soil_98_PKS_other<-phylo.d(soil_98_phy_signal,binvar = PKSother)
+soil_98_PKS_other#0.295
+
+soil_98_PKSI<-phylo.d(soil_98_phy_signal,binvar = PKSI)
+soil_98_PKSI#0.167
+
+
+soil_98_other<-phylo.d(soil_98_phy_signal,binvar = Others)
+soil_98_other#0.40
+
+
+
+
+
+
+
+######################################Plant MAGs####################################
 
 
 library(readxl)
