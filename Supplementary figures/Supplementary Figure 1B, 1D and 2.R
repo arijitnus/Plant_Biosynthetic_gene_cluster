@@ -1,6 +1,4 @@
 #Codes to reproduce the Supplementary Figure 1B, 1D and Supplementary Figure 2
-
-
 library(readxl)
 library(dplyr)
 all_soil_mags<-read_excel("/Users/arijitmukherjee/Documents/Phytobiome/BGC_isolates/New_final_data/MAGs/Earth_MAGs/earthmicrobiome_bgc_data (1).xlsx",col_names = T,skip = 0,sheet = "soil_bgc")
@@ -8,10 +6,15 @@ all_plant_mags<-read_excel("/Users/arijitmukherjee/Documents/Phytobiome/BGC_isol
 dim(all_soil_mags)
 dim(all_plant_mags)
 plant_isolates<-read_excel("/Users/arijitmukherjee/Documents/Phytobiome/BGC_isolates/New_final_data/Network_Annotations_Full_all_isolates.xlsx",sheet = "Filtered",col_names = T,skip = 0)
+soil_isolates<-read_excel("/Users/arijitmukherjee/Documents/soil_D_stat/soil_isolates.xlsx",sheet = "full_tab",col_names = T,skip = 0)
 
-df<-data.frame(total=c(all_soil_mags$bgc,all_plant_mags$bgc,plant_isolates$total),
-               Data=c(rep("Soil_MAGs",1300),rep("Plant_MAGs",1453),rep("Plant_isolates",2761)))
-df$Data<-as.factor(df$Data)
+df<-data.frame(total=c(all_soil_mags$bgc,all_plant_mags$bgc,plant_isolates$total,soil_isolates$total),
+               Data=c(rep("Soil MAGs",1300),rep("Plant MAGs",1453),rep("Plant isolates",2761),rep("Soil isolates",2533)))
+
+df$Data<-factor(df$Data,levels=c("Plant isolates","Soil isolates","Plant MAGs","Soil MAGs"))
+
+
+
 library(ggplot2)
 library(viridis)
 library(hrbrthemes)
@@ -19,9 +22,9 @@ library(hrbrthemes)
 #Fig.S2
 #boxplot of total number of BGCs per genome from isolates and MAGs
 box<-ggplot(df,aes(x=Data,y=total,fill=Data))+
+  geom_jitter(color="black", size=0.2, alpha=0.2) +
   geom_boxplot() +
-  scale_fill_viridis(discrete = TRUE, alpha=0.6) +
-  geom_jitter(color="black", size=0.4, alpha=0.5) +
+  scale_fill_viridis(discrete = TRUE, alpha=0.3) +
   theme_classic() +
   theme(
     legend.position="none",
@@ -30,25 +33,22 @@ box<-ggplot(df,aes(x=Data,y=total,fill=Data))+
   ggtitle("") +
   ylab("Total BGC count")+
   xlab("")+
-  theme(axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10),
-        axis.title.y = element_text(size = 10))
+  theme(axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 12))
 box
 ggsave(
-  "boxplot_three_data.tiff",
+  "boxplot_all_data.tiff",
   plot = last_plot(),
   device = NULL,
   path = NULL,
   scale = 1,
-  width = 5,
-  height = 5,
+  width = 6,
+  height = 6,
   units = "in",
-  dpi = 700,
+  dpi = 400,
 )
 dev.off()
-
-
-length(all_soil_mags$genome)
 
 
 
