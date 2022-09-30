@@ -152,12 +152,14 @@ soil_mags<-read_excel("/Users/arijitmukherjee/Documents/Phytobiome/BGC_isolates/
 plant_mags%>%group_by(Phylum)%>%summarise(count=n())
 soil_mags%>%group_by(Phylum)%>%summarise(count=n())
 plant_isolates%>%group_by(Phylum)%>%summarise(count=n())
-df<-data.frame(Datasets=c(rep("Plant_MAGs",5),rep("Soil_MAGs",5),rep("Plant_isolates",5)),
+df<-data.frame(Datasets=c(rep("Plant MAGs",5),rep("Soil MAGs",5),rep("Plant isolates",5),rep("Soil isolates",5)),
                Phylum=c("Proteobacteria","Actinobacteria","Bacteroidetes","Firmicutes","Others"),
                Number=c(894,132,178,20,229,
                         446,209,269,59,317,
-                        1800,325,86,548,2))
+                        1800,325,86,548,2,
+                        968,868,195,377,145))
 df
+
 library(ggplot2)
 stack<-ggplot(df,aes(x=Datasets,y=Number,fill=Phylum))+
   geom_bar(stat = "identity",position = "fill")+
@@ -167,10 +169,13 @@ stack<-ggplot(df,aes(x=Datasets,y=Number,fill=Phylum))+
   theme(axis.text.x = element_text(size = 12),
         axis.text.y = element_text(size = 12),
         axis.title.y = element_text(size = 12),
-        axis.title.x=element_text(size=12))
+        axis.title.x=element_text(size=12))+
+  theme(axis.text.x = element_text(angle = 30,hjust = 1))
+
 stack
+
 ggsave(
-  "stack_bar.tiff",
+  "stack_bar_new.tiff",
   plot = last_plot(),
   device = NULL,
   path = NULL,
@@ -178,6 +183,6 @@ ggsave(
   width = 6,
   height = 5,
   units = "in",
-  dpi = 700,
+  dpi = 400,
 )
 dev.off() 
