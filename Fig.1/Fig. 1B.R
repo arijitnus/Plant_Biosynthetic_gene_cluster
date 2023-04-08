@@ -14,7 +14,7 @@ genus_count
 
 #from this data plot filter the top seven upto streptomyces genera
 
-cols=c("#999999", "#006400", "#56B4E9","#FF6347","#3333FF","#000000","#FF9933")
+cols=c("#999999", "#006400", "#56B4E9","#999900","#3333FF","#000000","#FF9933")
 data7genus<-data%>%filter(Genus%in%c("Pseudomonas_E","Rhizobium","Mesorhizobium",
                                      "Xanthomonas","Bacillus_A","Sphingomonas","Streptomyces"))
 dim(data7genus)
